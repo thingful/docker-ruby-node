@@ -1,4 +1,5 @@
 FROM ruby:2.3
+MAINTAINER Thingful <info@thingful.net>
 
 RUN apt-get update && apt-get install -y xvfb libqtwebkit-dev postgresql-client
 
