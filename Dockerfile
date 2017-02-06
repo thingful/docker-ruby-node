@@ -1,8 +1,6 @@
 FROM ruby:2.3
 MAINTAINER Thingful <info@thingful.net>
 
-RUN apt-get update && apt-get install -y xvfb libqtwebkit-dev postgresql-client python-dev ntpdate
-
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
@@ -31,5 +29,12 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
+
+RUN apt-get update && apt-get install -y xvfb libqtwebkit-dev postgresql-client python-dev unzip
+
+RUN curl -SLO "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" \
+  && unzip awscli-bundle.zip \
+  && ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws \
+  && rm -rf "awscli-bundle*"
 
 CMD [ "irb" ]
