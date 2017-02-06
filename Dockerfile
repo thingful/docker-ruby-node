@@ -1,7 +1,7 @@
 FROM ruby:2.3
 MAINTAINER Thingful <info@thingful.net>
 
-RUN apt-get update && apt-get install -y xvfb libqtwebkit-dev postgresql-client python-dev
+RUN apt-get update && apt-get install -y xvfb libqtwebkit-dev postgresql-client python-dev ntpdate
 
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
