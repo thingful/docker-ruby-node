@@ -1,5 +1,3 @@
 # docker-ruby-node
 
-Docker image containing Ruby 2.3.3 and Node.js 4.7.2.
-
-Intended for use in building and testing the Thingful.net website.
+Alpine based docker image containing Ruby 2.4 and Node.js 8.9.1.
