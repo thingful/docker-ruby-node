@@ -2,15 +2,6 @@ FROM ruby:alpine3.6
 
 LABEL maintainer="Thingful <info@thingful.net>"
 
-RUN apk add --update \
-      git \
-      bash \
-      libpq \
-      postgresql-client \
-      postgresql-dev \
-      build-base && \
-      rm -rf /var/cache/apk/*
-
 ENV NODE_VERSION 8.9.1
 
 RUN addgroup -g 1000 node \
@@ -74,5 +65,13 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
   && apk del .build-deps-yarn
+
+RUN apk add --no-cache python qt5-qtwebkit-dev \
+  && apk add --no-cache --virtual .build-deps-aws curl unzip \
+  && curl -SLO "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" \
+  && unzip awscli-bundle.zip \
+  && ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws \
+  && rm -rf "awscli-bundle*" \
+  && apk del .build-deps-aws
 
 CMD [ "irb" ]
