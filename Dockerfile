@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:2.3
 MAINTAINER Thingful <info@thingful.net>
 
 RUN groupadd --gid 1000 node \
