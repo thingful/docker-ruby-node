@@ -5,6 +5,10 @@ LATEST := ${NAME}:latest
 
 .PHONY: build
 build:
-	echo ${IMG}
-	#docker build -t ${IMG} .
-	#docker tag ${IMG} ${LATEST}
+	docker build -t ${IMG} .
+	docker tag ${IMG} ${LATEST}
+
+.PHONY: push
+push: build
+	docker push ${IMG}
+	docker push ${LATEST}
