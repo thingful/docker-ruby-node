@@ -69,8 +69,8 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
 RUN apk add --update --no-cache \
   python \
   qt5-qtwebkit-dev \
-  build-base \
   postgresql-dev \
+  postgresql \
   tzdata \
   libxml2-dev \
   libxslt-dev \
