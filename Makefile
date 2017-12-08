@@ -5,10 +5,11 @@ LATEST := ${NAME}:latest
 
 .PHONY: build
 build:
-	docker build -t ${IMG} .
-	docker tag ${IMG} ${LATEST}
+	docker build -t ${NAME} .
 
 .PHONY: push
 push: build
+	docker tag ${NAME} ${IMG}
+	docker tag ${IMG} ${LATEST}
 	docker push ${IMG}
 	docker push ${LATEST}
