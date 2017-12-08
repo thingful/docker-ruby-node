@@ -66,12 +66,14 @@ RUN apk add --no-cache --virtual .build-deps-yarn curl gnupg tar \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
   && apk del .build-deps-yarn
 
-RUN apk add --no-cache python qt5-qtwebkit-dev \
-  && apk add --no-cache --virtual .build-deps-aws curl unzip \
+RUN apk add --no-cache python qt5-qtwebkit-dev build-base \
+  && apk add --no-cache --virtual .build-deps-aws curl unzip python-dev \
   && curl -SLO "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" \
   && unzip awscli-bundle.zip \
   && ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws \
   && rm -rf "awscli-bundle*" \
   && apk del .build-deps-aws
+
+ENV QMAKE /usr/lib/qt5/bin/qmake
 
 CMD [ "irb" ]
