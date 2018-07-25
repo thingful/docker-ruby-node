@@ -28,9 +28,23 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
-  && ln -s /usr/local/bin/node /usr/local/bin/nodejs
+  && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
+  && apt-get update \
+  && apt-get install -y \
+    xvfb \
+    libqtwebkit-dev \
+    postgresql-client \
+    python-dev \
+    unzip \
+    apt-transport-https \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y xvfb libqtwebkit-dev postgresql-client python-dev unzip
+RUN apt-key adv --keyserver pgp.mit.edu --recv 9D41F3C3 \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+  && apt-get update \
+  && apt-get install -y \
+    yarn \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN curl -SLO "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" \
   && unzip awscli-bundle.zip \
